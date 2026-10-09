@@ -352,7 +352,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visibl
     <span class="mobile-menu-label">Menu</span>
   </button>
   <div class="header-left">
-    <a class="course-home-link" id="courseHomeLink" href="index.html" style="display:none;align-items:center;gap:0.35rem;color:#93c5fd;text-decoration:none;font-size:0.8rem;font-weight:700;margin-right:0.6rem" title="Return to Course Directory">← Course Home</a>
+    <a class="course-home-link" id="courseHomeLink" href="index.html" style="display:inline-flex;align-items:center;gap:0.35rem;color:#93c5fd;text-decoration:none;font-size:0.8rem;font-weight:700;margin-right:0.6rem" title="Return to Course Directory">← Course Home</a>
     <span class="course-number">AFK-001</span>
     <span class="course-title">AI Fundamentals for Knowledge Workers</span>
   </div>
@@ -918,7 +918,7 @@ Provide the table structure in Markdown, indicating the exact formula to place i
           <div class="module-nav-cta" style="margin-top:1.25rem">
             <div style="display:flex;gap:0.75rem;justify-content:center;align-items:center;flex-wrap:wrap">
               
-                <a href="module_04.html" onclick="if(window.__navigateToNextModule){event.preventDefault();window.__navigateToNextModule();}" class="btn btn-primary" style="text-decoration:none;display:inline-block;padding:0.65rem 1.4rem;font-weight:700;font-size:0.95rem">Proceed to Module 4 →</a>
+                <a href="Module-04.html" onclick="if(window.__navigateToNextModule){event.preventDefault();window.__navigateToNextModule();}" class="btn btn-primary" style="text-decoration:none;display:inline-block;padding:0.65rem 1.4rem;font-weight:700;font-size:0.95rem">Proceed to Module 4 →</a>
                 <a href="index.html" class="btn btn-secondary directory-link" style="text-decoration:none;display:none;padding:0.65rem 1.25rem;font-weight:700;font-size:0.95rem">Course Directory</a>
               
             </div>
@@ -955,7 +955,7 @@ Provide the table structure in Markdown, indicating the exact formula to place i
   const visited = new Set([0]);
   const mobileQuery = window.matchMedia('(max-width: 768px)');
 
-  const NEXT_FILE = 'module_' + String(MODULE_NUM + 1).padStart(2, '0') + '.html';
+  const NEXT_FILE = "Module-04.html";
   const NEXT_FALLBACK = 'Module-' + String(MODULE_NUM + 1).padStart(2, '0') + '.html';
   const IS_FINAL = MODULE_NUM >= TOTAL_MODULES && MODULE_NUM > 0;
 
@@ -1218,6 +1218,23 @@ Provide the table structure in Markdown, indicating the exact formula to place i
   update(false);
 })();
 </script>
+
+
+<!-- Courseware Studio AI Tutor -->
+<link rel="stylesheet" href="ai-tutor/tutor.css">
+<script src="ai-tutor/tutor-config.js"></script>
+<script src="ai-tutor/tutor-strings.js"></script>
+<script>
+  window.__CS_AI_TUTOR_CONFIG__ = {
+    bundleUrl: "ai-tutor/tutor-data.js",
+    moduleNumber: 3,
+    totalModules: 5,
+    courseTitle: "AI Fundamentals for Knowledge Workers",
+    formatId: "html5",
+    language: "english"
+  };
+</script>
+<script src="ai-tutor/tutor.js" defer></script>
 
 </body>
 </html>

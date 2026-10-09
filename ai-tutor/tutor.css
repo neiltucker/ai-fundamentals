@@ -1,0 +1,279 @@
+/* ============================================================
+   Courseware Studio — LMS-Embedded AI Learning Assistant Widget Styling
+   ----------------------------------------------------------------
+   Brand palette (matches coursewarestudio.ai):
+     navy:   #0b1d3f
+     gold:   #c9a55c
+     ink:    #1a1a1a
+     subtle: #6b7280
+     paper:  #ffffff
+     surface:#f7f7f5
+
+   All selectors prefixed with cs-tutor- to avoid course-content
+   collisions. No global tag selectors. No !important except on
+   the FAB z-index (it MUST sit above arbitrary LMS chrome).
+
+   Responsive: slide-out panel becomes full-width on screens < 640px.
+   ============================================================ */
+
+.cs-tutor-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2147483600 !important;  /* above arbitrary LMS chrome */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 12px 18px 12px 14px;
+  border: none;
+  border-radius: 999px;
+  background: #0b1d3f;
+  color: #ffffff;
+  font: 600 14px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(11, 29, 63, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.cs-tutor-fab:hover  { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(11, 29, 63, 0.4); }
+.cs-tutor-fab:focus-visible  { outline: 3px solid #c9a55c; outline-offset: 3px; }
+
+.cs-tutor-fab-icon {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #c9a55c;
+  color: #0b1d3f;
+  text-align: center;
+  line-height: 22px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Modal overlay — prevents pointer interaction with course content while open. */
+.cs-tutor-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 29, 63, 0.35);
+  z-index: 2147483610;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.cs-tutor-overlay--open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Slide-out panel */
+.cs-tutor-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  height: 100dvh;
+  width: 420px;
+  max-width: 100vw;
+  background: #ffffff;
+  color: #1a1a1a;
+  z-index: 2147483620;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -8px 0 32px rgba(11, 29, 63, 0.18);
+  transform: translateX(100%);
+  transition: transform 0.25s ease;
+  pointer-events: none;
+  font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.cs-tutor-panel--open { transform: translateX(0); pointer-events: auto; }
+
+.cs-tutor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e6e6e1;
+  background: #0b1d3f;
+  color: #ffffff;
+}
+.cs-tutor-title { margin: 0; font-size: 16px; font-weight: 600; letter-spacing: 0.2px; line-height: 1.25; }
+
+.cs-tutor-close {
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.cs-tutor-close:hover { background: rgba(255, 255, 255, 0.12); }
+.cs-tutor-close:focus-visible { outline: 3px solid #c9a55c; outline-offset: 2px; }
+
+.cs-tutor-scope {
+  padding: 10px 20px;
+  background: #f7f7f5;
+  border-bottom: 1px solid #e6e6e1;
+}
+.cs-tutor-scope-label { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: #6b7280; font-size: 13px; cursor: pointer; }
+.cs-tutor-scope-checkbox { width: 20px; height: 20px; accent-color: #0b1d3f; }
+
+.cs-tutor-log {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cs-tutor-msg {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 90%;
+}
+.cs-tutor-msg--user      { align-self: flex-end; }
+.cs-tutor-msg--assistant { align-self: flex-start; }
+
+.cs-tutor-msg-body {
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.cs-tutor-msg--user      .cs-tutor-msg-body { background: #0b1d3f; color: #ffffff; border-bottom-right-radius: 4px; }
+.cs-tutor-msg--assistant .cs-tutor-msg-body { background: #f3f1ea; color: #1a1a1a; border-bottom-left-radius: 4px; }
+
+.cs-tutor-msg-cite {
+  margin-top: 2px;
+  padding: 0 14px;
+  font-size: 12px;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.cs-tutor-status {
+  padding: 6px 20px;
+  font-size: 12px;
+  color: #6b7280;
+  min-height: 18px;
+}
+
+.cs-tutor-fatal {
+  padding: 12px 14px;
+  background: #fef3c7;
+  color: #6b4f00;
+  border: 1px solid #f0d97a;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.cs-tutor-form {
+  display: flex;
+  gap: 8px;
+  padding: 12px 20px;
+  border-top: 1px solid #e6e6e1;
+  background: #ffffff;
+}
+.cs-tutor-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #d4d4cf;
+  border-radius: 8px;
+  font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #1a1a1a;
+  background: #ffffff;
+}
+.cs-tutor-input:focus-visible { outline: 2px solid #0b1d3f; outline-offset: 1px; border-color: #0b1d3f; box-shadow: 0 0 0 3px rgba(11, 29, 63, 0.12); }
+.cs-tutor-input:disabled { background: #f3f1ea; color: #9ca3af; cursor: not-allowed; }
+
+.cs-tutor-submit {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 10px 18px;
+  background: #c9a55c;
+  color: #0b1d3f;
+  border: none;
+  border-radius: 8px;
+  font: 600 14px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.cs-tutor-submit:hover    { background: #b58f3f; }
+.cs-tutor-submit:focus-visible    { outline: 3px solid #0b1d3f; outline-offset: 2px; }
+.cs-tutor-submit:disabled { background: #d4d4cf; color: #9ca3af; cursor: not-allowed; }
+
+.cs-tutor-footer {
+  padding: 10px 20px;
+  border-top: 1px solid #e6e6e1;
+  font-size: 11px;
+  color: #6b7280;
+  text-align: center;
+  background: #f7f7f5;
+}
+
+/* Welcome card */
+.cs-tutor-welcome {
+  background: #fff8e7;
+  border: 1px solid #f0d97a;
+  border-radius: 12px;
+  padding: 16px;
+  align-self: stretch;
+}
+.cs-tutor-welcome-title { margin: 0 0 8px 0; font-size: 15px; color: #0b1d3f; }
+.cs-tutor-welcome-body  { margin: 0 0 12px 0; font-size: 13px; line-height: 1.5; color: #4a4a4a; }
+.cs-tutor-welcome-ok {
+  min-height: 44px;
+  padding: 6px 14px;
+  background: #0b1d3f;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font: 600 13px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  cursor: pointer;
+}
+.cs-tutor-welcome-ok:hover { background: #1a3055; }
+.cs-tutor-welcome-ok:focus-visible { outline: 3px solid #2563eb; outline-offset: 2px; }
+
+/* Mobile breakpoint — panel becomes full-screen */
+@media (max-width: 640px) {
+  .cs-tutor-panel {
+    width: 100vw;
+    box-shadow: none;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .cs-tutor-fab {
+    bottom: max(16px, env(safe-area-inset-bottom));
+    right: max(16px, env(safe-area-inset-right));
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+  .cs-tutor-fab-label {
+    display: none;  /* icon-only on mobile to save space */
+  }
+}
+
+/* Print — hide tutor when learner prints the course */
+@media print {
+  .cs-tutor-fab,
+  .cs-tutor-panel,
+  .cs-tutor-overlay { display: none !important; }
+}
+
+/* Reduced motion — respect OS-level preference */
+@media (prefers-reduced-motion: reduce) {
+  .cs-tutor-fab,
+  .cs-tutor-panel,
+  .cs-tutor-overlay { transition: none; }
+}

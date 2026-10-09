@@ -352,7 +352,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visibl
     <span class="mobile-menu-label">Menu</span>
   </button>
   <div class="header-left">
-    <a class="course-home-link" id="courseHomeLink" href="index.html" style="display:none;align-items:center;gap:0.35rem;color:#93c5fd;text-decoration:none;font-size:0.8rem;font-weight:700;margin-right:0.6rem" title="Return to Course Directory">← Course Home</a>
+    <a class="course-home-link" id="courseHomeLink" href="index.html" style="display:inline-flex;align-items:center;gap:0.35rem;color:#93c5fd;text-decoration:none;font-size:0.8rem;font-weight:700;margin-right:0.6rem" title="Return to Course Directory">← Course Home</a>
     <span class="course-number">AFK-001</span>
     <span class="course-title">AI Fundamentals for Knowledge Workers</span>
   </div>
@@ -491,10 +491,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visibl
 <p>Practical application is central to this curriculum. To get the full value of the exercises and lab assignments, verify your tools and environment before starting Module 1.</p>
 <h3>Readiness Checklist</h3>
 <ul>
-<li><strong>Environment Access:</strong> Ensure you have access to the required operating systems, shells, or cloud consoles specified in the course syllabus.</li>
-<li><strong>Tools &amp; Utilities:</strong> Confirm that terminal emulators, text editors, and necessary runtime packages are installed and functional.</li>
-<li><strong>Permissions &amp; Credentials:</strong> Verify that you have appropriate administrative privileges or sandbox access for lab tasks.</li>
-<li><strong>Documentation Access:</strong> Bookmark relevant official documentation and reference guides provided in this course.</li>
+<li><strong>Web Browser Access:</strong> Ensure you have access to a modern desktop web browser (Google Chrome, Microsoft Edge, Mozilla Firefox, or Apple Safari).</li>
+<li><strong>Generative AI Platform Account:</strong> Verify active access to at least one major conversational AI tool (such as free accounts on OpenAI ChatGPT, Anthropic Claude, or Microsoft Copilot).</li>
+<li><strong>Office Applications:</strong> Ensure access to standard word processing and spreadsheet applications (such as Microsoft 365, Google Docs/Sheets, or desktop equivalents) to test and review AI prompt outputs.</li>
+<li><strong>Data Governance Safeguards:</strong> Follow your organization's data protection policies: never input confidential company records, proprietary customer data, or unapproved personal data into public AI services.</li>
 </ul>
 </div>
       <div class="key-points">
@@ -547,7 +547,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visibl
           <div class="module-nav-cta" style="margin-top:1.25rem">
             <div style="display:flex;gap:0.75rem;justify-content:center;align-items:center;flex-wrap:wrap">
               
-                <a href="module_01.html" onclick="if(window.__navigateToNextModule){event.preventDefault();window.__navigateToNextModule();}" class="btn btn-primary" style="text-decoration:none;display:inline-block;padding:0.65rem 1.4rem;font-weight:700;font-size:0.95rem">Proceed to Module 1 →</a>
+                <a href="Module-01.html" onclick="if(window.__navigateToNextModule){event.preventDefault();window.__navigateToNextModule();}" class="btn btn-primary" style="text-decoration:none;display:inline-block;padding:0.65rem 1.4rem;font-weight:700;font-size:0.95rem">Proceed to Module 1 →</a>
                 <a href="index.html" class="btn btn-secondary directory-link" style="text-decoration:none;display:none;padding:0.65rem 1.25rem;font-weight:700;font-size:0.95rem">Course Directory</a>
               
             </div>
@@ -584,7 +584,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visibl
   const visited = new Set([0]);
   const mobileQuery = window.matchMedia('(max-width: 768px)');
 
-  const NEXT_FILE = 'module_' + String(MODULE_NUM + 1).padStart(2, '0') + '.html';
+  const NEXT_FILE = "Module-01.html";
   const NEXT_FALLBACK = 'Module-' + String(MODULE_NUM + 1).padStart(2, '0') + '.html';
   const IS_FINAL = MODULE_NUM >= TOTAL_MODULES && MODULE_NUM > 0;
 
@@ -847,6 +847,23 @@ button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visibl
   update(false);
 })();
 </script>
+
+
+<!-- Courseware Studio AI Tutor -->
+<link rel="stylesheet" href="ai-tutor/tutor.css">
+<script src="ai-tutor/tutor-config.js"></script>
+<script src="ai-tutor/tutor-strings.js"></script>
+<script>
+  window.__CS_AI_TUTOR_CONFIG__ = {
+    bundleUrl: "ai-tutor/tutor-data.js",
+    moduleNumber: 0,
+    totalModules: 5,
+    courseTitle: "AI Fundamentals for Knowledge Workers",
+    formatId: "html5",
+    language: "english"
+  };
+</script>
+<script src="ai-tutor/tutor.js" defer></script>
 
 </body>
 </html>
