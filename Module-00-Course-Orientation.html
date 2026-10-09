@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course Orientation: Welcome &amp; Overview (Optional) — AI Fundamentals for Knowledge Workers</title>
+<style>
+/* === RESET & BASE === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #1a1a2e; background: #f8f9fa; line-height: 1.65; display: flex; flex-direction: column; min-height: 100vh;
+}
+.skip-link {
+  position: fixed; left: 0.75rem; top: 0.75rem; z-index: 1000;
+  transform: translateY(-200%); background: #fff; color: #1e40af;
+  border: 2px solid #1e40af; border-radius: 0.5rem; padding: 0.65rem 0.9rem;
+  font-weight: 700; text-decoration: none;
+}
+.skip-link:focus { transform: translateY(0); }
+button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid #f59e0b; outline-offset: 3px;
+}
+
+/* === HEADER === */
+.course-header {
+  background: #1a1a2e; color: #fff; padding: 0.75rem 1.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.mobile-menu-button {
+  display: none; align-items: center; justify-content: center; gap: 0.45rem;
+  min-width: 44px; min-height: 44px; padding: 0.45rem 0.7rem;
+  border: 1px solid rgba(255,255,255,0.45); border-radius: 0.5rem;
+  background: transparent; color: #fff; cursor: pointer; font: inherit; font-weight: 700;
+}
+.header-left { display: flex; align-items: center; gap: 1rem; min-width: 0; }
+.course-number { font-size: 0.8rem; opacity: 0.7; font-family: monospace; }
+.course-title { font-size: 0.95rem; font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.header-right { display: flex; align-items: center; gap: 1.5rem; font-size: 0.85rem; }
+.module-label { opacity: 0.8; }
+.progress-text { font-weight: 600; color: #6ee7b7; }
+.print-btn {
+  background: transparent; border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.9); font-size: 0.78rem; padding: 0.3rem 0.75rem;
+  border-radius: 3px; cursor: pointer; font-family: inherit;
+  transition: background 0.15s, border-color 0.15s; white-space: nowrap;
+}
+.print-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.5); }
+
+/* === LAYOUT === */
+.layout { display: flex; flex: 1; min-height: 0; }
+
+/* === SIDEBAR === */
+.sidebar {
+  width: 280px; background: #fff; border-right: 1px solid #e5e7eb;
+  display: flex; flex-direction: column; overflow-y: auto; flex-shrink: 0;
+  position: sticky; top: 52px; height: calc(100vh - 52px);
+}
+.sidebar-header { padding: 1.25rem 1rem 0.75rem; display: flex; justify-content: space-between; align-items: start; }
+.sidebar-header h2 { font-size: 1rem; font-weight: 700; color: #1a1a2e; line-height: 1.3; }
+.sidebar-toggle { display: none; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; background: none; border: none; font-size: 1.7rem; cursor: pointer; color: #4b5563; }
+.sidebar-backdrop { display: none; }
+.progress-bar { height: 3px; background: #e5e7eb; margin: 0 1rem 0.5rem; border-radius: 2px; }
+.progress-fill { height: 100%; background: #3b82f6; border-radius: 2px; width: 0; transition: width 0.4s ease; }
+.nav-list { list-style: none; padding: 0.25rem 0.5rem 1rem; flex: 1; overflow-y: auto; }
+.nav-btn {
+  width: 100%; min-height: 44px; text-align: left; background: none; border: none; padding: 0.6rem 0.75rem;
+  display: flex; align-items: center; gap: 0.6rem; border-radius: 0.5rem;
+  cursor: pointer; font-size: 0.85rem; color: #4b5563; transition: all 0.15s;
+}
+.nav-btn:hover { background: #f3f4f6; color: #1a1a2e; }
+.nav-btn.active { background: #eff6ff; color: #2563eb; font-weight: 600; }
+.nav-btn.visited .nav-check { display: inline; }
+.nav-icon { font-size: 1rem; flex-shrink: 0; }
+.nav-label { flex: 1; }
+.nav-check { display: none; color: #22c55e; font-size: 0.8rem; flex-shrink: 0; }
+
+/* === MAIN CONTENT === */
+.content { flex: 1; padding: 2rem 3rem 2rem 2.5rem; max-width: 860px; min-height: calc(100vh - 52px); }
+.screen { display: none; animation: fadeIn 0.25s ease; }
+.screen.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* === NAV BUTTONS === */
+.nav-buttons {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #e5e7eb;
+}
+.screen-counter { font-size: 0.85rem; color: #6b7280; }
+.btn {
+  min-height: 44px; padding: 0.6rem 1.4rem; border-radius: 0.5rem; font-size: 0.9rem; font-weight: 600;
+  border: none; cursor: pointer; transition: all 0.15s;
+}
+.btn:disabled { opacity: 0.4; cursor: default; }
+.btn-primary { background: #2563eb; color: #fff; }
+.btn-primary:hover:not(:disabled) { background: #1d4ed8; }
+.btn-secondary { background: #f3f4f6; color: #4b5563; }
+.btn-secondary:hover:not(:disabled) { background: #e5e7eb; }
+
+/* === LANDING SCREEN === */
+.screen-landing { text-align: center; padding: 3rem 0; }
+.publisher-brand-block {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.65rem; margin: 0 auto 2rem; min-height: 84px;
+}
+.publisher-logo {
+  display: block; width: auto; height: auto; max-width: min(240px, 70vw); max-height: 92px;
+  object-fit: contain; object-position: center;
+}
+.screen-landing h1 { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; color: #6b7280; }
+.screen-landing h2 { font-size: 2rem; font-weight: 800; color: #1a1a2e; margin-top: 0.25rem; }
+.publisher-copyright { margin: 0; font-size: 0.78rem; color: #6b7280; }
+.objectives-box {
+  text-align: left; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 0.75rem;
+  padding: 1.5rem; margin: 2rem auto; max-width: 580px;
+}
+.lesson-content .objectives-box { max-width: 100%; margin: 1.5rem 0; }
+.objectives-box h3 { font-size: 1rem; margin-bottom: 0.5rem; color: #1e40af; }
+.objectives-box ul { margin-top: 0.5rem; padding-left: 1.25rem; }
+.objectives-box li { margin-bottom: 0.4rem; font-size: 0.92rem; color: #1e3a5f; }
+.start-hint { margin-top: 2rem; color: #6b7280; font-size: 0.9rem; }
+
+/* === LESSON SCREEN === */
+.screen-lesson h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.25rem; color: #1a1a2e; }
+.lesson-content { font-size: 0.95rem; line-height: 1.75; }
+.lesson-content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.5rem; color: #1a1a2e; }
+.lesson-content h4 { font-size: 1rem; font-weight: 600; margin: 1.25rem 0 0.4rem; }
+.lesson-content p { margin-bottom: 0.75rem; }
+.lesson-content ul, .lesson-content ol { margin: 0.5rem 0 1rem 1.25rem; }
+.lesson-content li { margin-bottom: 0.3rem; }
+.lesson-content code { background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 0.25rem; font-size: 0.88rem; }
+.lesson-content pre { background: #1e293b; color: #e2e8f0; padding: 1rem 1.25rem; border-radius: 0.5rem; overflow-x: auto; margin: 1rem 0; }
+.lesson-content pre code { background: none; padding: 0; color: inherit; }
+.lesson-content blockquote { border-left: 3px solid #3b82f6; padding: 0.5rem 1rem; background: #f8fafc; margin: 1rem 0; border-radius: 0 0.5rem 0.5rem 0; }
+.lesson-content table { width: 100%; max-width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; table-layout: auto; }
+.lesson-content th, .lesson-content td { padding: 0.6rem 0.75rem; border: 1px solid #e5e7eb; text-align: left; overflow-wrap: anywhere; }
+.lesson-content th { background: #f8fafc; font-weight: 600; }
+
+/* === MEDIA === */
+.media-block { margin: 1.5rem 0; text-align: center; }
+.media-caption { font-size: 0.82rem; color: #6b7280; margin-top: 0.5rem; font-style: italic; }
+.media-placeholder { background: #f8fafc; border: 2px dashed #d1d5db; border-radius: 0.5rem; padding: 2rem; }
+.placeholder-icon { font-size: 2rem; }
+
+/* === KEY POINTS === */
+.key-points {
+  background: #fefce8; border: 1px solid #fde68a; border-radius: 0.75rem;
+  padding: 1.25rem; margin-top: 1.5rem;
+}
+.key-points h4 { font-size: 0.95rem; margin-bottom: 0.5rem; }
+.key-points ul { padding-left: 1.25rem; }
+.key-points li { font-size: 0.9rem; margin-bottom: 0.3rem; color: #713f12; }
+
+/* === LAB === */
+.screen-lab h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.lab-header { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1.5rem; }
+.lab-objective { font-size: 0.92rem; color: #166534; margin-top: 0.5rem; }
+.lab-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.75rem; }
+.lab-meta-item { font-size: 0.82rem; color: #15803d; font-weight: 500; }
+.lab-prereqs { margin-top: 0.75rem; font-size: 0.85rem; color: #166534; }
+.lab-prereqs ul { margin: 0.25rem 0 0 1.25rem; padding: 0; }
+.lab-prereqs li { margin-bottom: 0.15rem; }
+.lab-procedures h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: #1e293b; }
+.lab-step { background: #fff; border: 1px solid #e2e8f0; border-radius: 0.75rem; padding: 1rem 1.25rem; margin-bottom: 0.75rem; }
+.lab-step-header { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.5rem; }
+.lab-step-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; min-width: 28px; background: #2563eb; color: #fff; font-size: 0.82rem; font-weight: 700; border-radius: 50%; }
+.lab-step-instruction { font-weight: 600; color: #1e293b; font-size: 0.95rem; line-height: 1.5; padding-top: 2px; }
+.lab-step-detail { font-size: 0.9rem; line-height: 1.7; color: #475569; margin-top: 0.25rem; padding-left: 2.8rem; }
+.lab-step-detail code { background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 0.25rem; font-size: 0.85rem; }
+.lab-step-detail pre { background: #1e293b; color: #e2e8f0; padding: 0.75rem 1rem; border-radius: 0.5rem; overflow-x: auto; margin: 0.5rem 0; font-size: 0.85rem; }
+.lab-step-detail pre code { background: none; padding: 0; color: inherit; }
+.lab-expected-output { margin: 0.5rem 0 0 2.8rem; background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 0.5rem; padding: 0.75rem 1rem; }
+.lab-expected-label { font-size: 0.78rem; font-weight: 700; color: #0369a1; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.35rem; }
+.lab-expected-output pre { background: #0c4a6e; color: #e0f2fe; padding: 0.5rem 0.75rem; border-radius: 0.375rem; margin: 0.25rem 0 0; font-size: 0.82rem; overflow-x: auto; }
+.lab-expected-output pre code { background: none; padding: 0; color: inherit; }
+.lab-verification { display: flex; align-items: flex-start; gap: 0.5rem; margin: 0.5rem 0 0 2.8rem; padding: 0.6rem 0.75rem; background: #fefce8; border: 1px solid #fde68a; border-radius: 0.5rem; font-size: 0.85rem; color: #854d0e; }
+.lab-verification-icon { font-size: 1rem; line-height: 1.3; }
+.lab-troubleshooting { margin-top: 1.5rem; }
+.lab-troubleshooting h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; color: #1e293b; }
+.lab-trouble-item { background: #fff; border: 1px solid #e2e8f0; border-radius: 0.5rem; margin-bottom: 0.5rem; }
+.lab-trouble-item summary { display: flex; align-items: center; min-height: 44px; padding: 0.75rem 1rem; font-size: 0.9rem; font-weight: 500; color: #b45309; cursor: pointer; list-style: none; }
+.lab-trouble-item summary::before { content: '▸ '; font-weight: 700; }
+.lab-trouble-item[open] summary::before { content: '▾ '; }
+.lab-trouble-solution { padding: 0 1rem 0.75rem; font-size: 0.87rem; color: #475569; line-height: 1.6; }
+.lab-trouble-solution code { background: #f1f5f9; padding: 0.1rem 0.3rem; border-radius: 0.2rem; font-size: 0.84rem; }
+.lab-challenge { margin-top: 1.5rem; background: #faf5ff; border: 2px dashed #c4b5fd; border-radius: 0.75rem; padding: 1.25rem; }
+.lab-challenge h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; color: #6b21a8; }
+.lab-challenge-intro { font-size: 0.82rem; color: #7c3aed; margin-bottom: 0.75rem; font-style: italic; }
+.lab-challenge-body { font-size: 0.9rem; line-height: 1.65; color: #581c87; }
+.lab-challenge-body code { background: #ede9fe; padding: 0.1rem 0.3rem; border-radius: 0.2rem; font-size: 0.84rem; }
+.lab-steps { font-size: 0.95rem; line-height: 1.75; }
+.lab-steps ol { padding-left: 1.25rem; }
+.lab-steps li { margin-bottom: 0.5rem; }
+.lab-steps code { background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 0.25rem; font-size: 0.88rem; }
+.lab-steps pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin: 0.75rem 0; }
+.lab-steps pre code { background: none; padding: 0; color: inherit; }
+.lab-check { margin-top: 1.5rem; padding: 1rem; background: #f8fafc; border-radius: 0.5rem; }
+.lab-check.completed { background: #f0fdf4; border: 1px solid #bbf7d0; }
+.checkbox-label { display: flex; align-items: center; gap: 0.5rem; min-height: 44px; cursor: pointer; font-size: 0.92rem; }
+.checkbox-label input { width: 1.1rem; height: 1.1rem; accent-color: #22c55e; }
+
+/* === QUIZ === */
+.screen-quiz h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.quiz-intro { font-size: 0.92rem; color: #6b7280; margin-bottom: 1.5rem; }
+.quiz-question { min-width: 0; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1rem; }
+.quiz-question legend { width: 100%; padding: 0; margin-bottom: 0.75rem; }
+.question-label { display: block; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; margin-bottom: 0.5rem; font-weight: 700; }
+.question-text { display: block; font-size: 0.95rem; font-weight: 600; }
+.options { display: flex; flex-direction: column; gap: 0.5rem; }
+.option-label {
+  display: flex; align-items: center; gap: 0.6rem; min-height: 44px; padding: 0.6rem 0.75rem;
+  border: 1px solid #e5e7eb; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; transition: all 0.15s;
+}
+.option-label:hover { border-color: #93c5fd; background: #eff6ff; }
+.option-label input { accent-color: #2563eb; }
+.option-label.correct { background: #f0fdf4; border-color: #86efac; }
+.option-label.incorrect { background: #fef2f2; border-color: #fca5a5; }
+.feedback { margin-top: 0.5rem; padding: 0.75rem; border-radius: 0.5rem; font-size: 0.88rem; display: none; }
+.feedback.show { display: block; }
+.feedback.correct { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+.feedback.incorrect { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+.quiz-actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+.quiz-results {
+  margin-top: 1.5rem; padding: 1.25rem; border-radius: 0.75rem; display: none;
+  text-align: center; font-size: 1.1rem; font-weight: 700;
+}
+.quiz-results.show { display: block; }
+.quiz-results.pass { background: #f0fdf4; color: #166534; border: 2px solid #86efac; }
+.quiz-results.fail { background: #fefce8; color: #854d0e; border: 2px solid #fde68a; }
+
+/* === SUMMARY === */
+.screen-summary h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+.summary-content { font-size: 0.95rem; line-height: 1.75; margin-bottom: 1.5rem; }
+.objectives-review { background: #f8fafc; border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1.5rem; }
+.objectives-review h3 { font-size: 1rem; margin-bottom: 0.75rem; }
+.objectives-checklist { list-style: none; }
+.objectives-checklist li { margin-bottom: 0.5rem; }
+.completion-box { text-align: center; padding: 2rem; background: #f0fdf4; border-radius: 0.75rem; border: 1px solid #bbf7d0; }
+.completion-icon { font-size: 3rem; }
+.completion-box h3 { margin-top: 0.5rem; color: #166534; }
+
+/* === FOOTER === */
+.course-footer {
+  background: #1a1a2e; color: #9ca3af; padding: 0.75rem 1.5rem;
+  display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem;
+}
+.trial-badge { background: #2563eb; color: #fff; padding: 0.2rem 0.6rem; border-radius: 0.25rem; font-size: 0.72rem; }
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .course-header { min-height: 64px; padding: 0.6rem 0.75rem; gap: 0.65rem; }
+  .mobile-menu-button { display: inline-flex; flex-shrink: 0; }
+  .header-left { flex: 1; gap: 0.5rem; }
+  .header-right { flex-shrink: 0; gap: 0.65rem; }
+  .course-number { display: none; }
+  .print-btn { min-width: 44px; min-height: 44px; padding: 0.45rem 0.6rem; }
+  .print-label { display: none; }
+  .sidebar { position: fixed; left: -280px; top: 64px; height: calc(100vh - 64px); height: calc(100dvh - 64px); z-index: 92; transition: left 0.25s; box-shadow: 2px 0 12px rgba(0,0,0,0.15); }
+  .sidebar.open { left: 0; }
+  .sidebar-toggle { display: inline-flex; }
+  .sidebar-backdrop {
+    display: block; position: fixed; inset: 64px 0 0; z-index: 91; border: 0;
+    background: rgba(15,23,42,0.45); opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+  }
+  .sidebar-backdrop.open { opacity: 1; pointer-events: auto; }
+  .content { width: 100%; max-width: 100%; min-width: 0; padding: 1.5rem 1rem; }
+  .header-left .course-title { font-size: 0.85rem; }
+  .publisher-logo { max-width: min(190px, 72vw); max-height: 76px; }
+  .quiz-actions { flex-wrap: wrap; }
+  .nav-buttons { gap: 0.75rem; }
+}
+
+@media (max-width: 480px) {
+  .mobile-menu-label, .module-label, .progress-text { display: none; }
+  .header-right { gap: 0.45rem; }
+  .content { padding: 1.25rem 0.75rem; }
+  .screen-landing { padding: 2rem 0; }
+  .screen-landing h2 { font-size: 1.55rem; }
+  .objectives-box, .quiz-question, .lab-header, .lab-step, .completion-box { padding: 1rem; }
+  .lab-step-detail, .lab-expected-output, .lab-verification { margin-left: 0; padding-left: 0.75rem; }
+  .lab-step-detail { padding-left: 0; }
+  .nav-buttons { flex-wrap: wrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .screen { animation: none; }
+  .progress-fill, .nav-btn, .btn, .print-btn, .sidebar, .sidebar-backdrop { transition: none; }
+}
+
+/* === PRINT === */
+@media print {
+  /* Hide all interactive chrome */
+  .sidebar, .nav-buttons, .course-header, .course-footer,
+  .sidebar-toggle, .sidebar-backdrop, .mobile-menu-button, .quiz-actions, .lab-check, .print-btn, .skip-link { display: none !important; }
+
+  /* Full-width content, no padding waste */
+  body  { background: #fff !important; color: #000 !important; font-size: 11pt; line-height: 1.55; }
+  .layout { display: block !important; }
+  .content { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+
+  /* Show all screens sequentially with page breaks */
+  .screen { display: block !important; animation: none !important; opacity: 1 !important; transform: none !important; page-break-after: always; break-after: page; }
+  .screen:last-child { page-break-after: avoid; break-after: avoid; }
+
+  /* Headings */
+  h1, h2 { page-break-after: avoid; break-after: avoid; font-size: 14pt; }
+  h3, h4  { page-break-after: avoid; break-after: avoid; font-size: 12pt; }
+
+  /* Keep steps and quiz questions together */
+  .lab-step, .quiz-question { page-break-inside: avoid; break-inside: avoid; }
+
+  /* Code blocks — preserve formatting, avoid splitting */
+  pre { white-space: pre-wrap; word-break: break-word; page-break-inside: avoid; break-inside: avoid;
+        background: #f5f5f5 !important; color: #000 !important; border: 1px solid #ccc;
+        padding: 0.5rem 0.75rem; font-size: 9pt; }
+  code { background: #f5f5f5 !important; color: #000 !important; font-size: 9pt; }
+
+  /* AI images — scale to fit, never split */
+  .media-block { page-break-inside: avoid; break-inside: avoid; text-align: center; }
+  .media-block svg, .media-block img { max-width: 100% !important; height: auto !important; }
+
+  /* Key points — keep together */
+  .key-points { page-break-inside: avoid; break-inside: avoid;
+                background: #fefce8 !important; border: 1px solid #ccc; }
+
+  /* Remove link underlines and interactive colours */
+  a { color: #000 !important; text-decoration: none !important; }
+
+  /* Quiz — show correct answer indicator in print */
+  .option-label.correct { background: #f0fff0 !important; font-weight: 600; }
+  .feedback.correct { display: block !important; }
+
+  /* Objectives box */
+  .objectives-box { background: #f0f8ff !important; border: 1px solid #ccc !important; }
+
+  /* Page margins */
+  @page { margin: 18mm 15mm; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#content">Skip to course content</a>
+
+<!-- ====== HEADER ====== -->
+<header class="course-header">
+  <button class="mobile-menu-button" id="mobileMenuBtn" type="button" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="false" aria-label="Open module navigation">
+    <span aria-hidden="true">☰</span>
+    <span class="mobile-menu-label">Menu</span>
+  </button>
+  <div class="header-left">
+    <a class="course-home-link" id="courseHomeLink" href="index.html" style="display:none;align-items:center;gap:0.35rem;color:#93c5fd;text-decoration:none;font-size:0.8rem;font-weight:700;margin-right:0.6rem" title="Return to Course Directory">← Course Home</a>
+    <span class="course-number">AFK-001</span>
+    <span class="course-title">AI Fundamentals for Knowledge Workers</span>
+  </div>
+  <div class="header-right">
+    <span class="module-label">Course Orientation</span>
+    <span class="progress-text"><span id="progressPercent">0</span>% complete</span>
+    <button class="print-btn" type="button" onclick="window.print()" title="Print / Save as PDF" aria-label="Print / Save as PDF"><span aria-hidden="true">&#128424;</span> <span class="print-label">Print / Save as PDF</span></button>
+  </div>
+</header>
+
+<!-- ====== LAYOUT ====== -->
+<div class="layout">
+
+  <!-- Sidebar Navigation -->
+  <nav class="sidebar" id="sidebar" aria-label="Module navigation">
+    <div class="sidebar-header">
+      <h2>Course Orientation: Welcome &amp; Overview (Optional)</h2>
+      <button class="sidebar-toggle" type="button" onclick="closeSidebar(true)" aria-label="Close module navigation"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="progress-bar" id="progressBar" role="progressbar" aria-label="Module progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-fill" id="progressFill"></div></div>
+    <ul class="nav-list">
+      <li><button class="nav-btn active" onclick="goTo(0)" id="nav-0" aria-current="page">
+        <span class="nav-icon" aria-hidden="true">🏠</span>
+        <span class="nav-label">Welcome</span>
+        <span class="nav-check" id="check-0" aria-hidden="true">✓</span>
+      </button></li>
+      <li><button class="nav-btn" onclick="goTo(1)" id="nav-1">
+        <span class="nav-icon" aria-hidden="true">📖</span>
+        <span class="nav-label">Course Overview &amp; Roadmap</span>
+        <span class="nav-check" id="check-1" aria-hidden="true">✓</span>
+      </button></li>
+      <li><button class="nav-btn" onclick="goTo(2)" id="nav-2">
+        <span class="nav-icon" aria-hidden="true">📖</span>
+        <span class="nav-label">Target Audience &amp; Prerequisites</span>
+        <span class="nav-check" id="check-2" aria-hidden="true">✓</span>
+      </button></li>
+      <li><button class="nav-btn" onclick="goTo(3)" id="nav-3">
+        <span class="nav-icon" aria-hidden="true">📖</span>
+        <span class="nav-label">Environment &amp; Tooling Readiness</span>
+        <span class="nav-check" id="check-3" aria-hidden="true">✓</span>
+      </button></li>
+      <li><button class="nav-btn" onclick="goTo(4)" id="nav-4">
+        <span class="nav-icon" aria-hidden="true">📖</span>
+        <span class="nav-label">Learning Strategies &amp; How to Succeed</span>
+        <span class="nav-check" id="check-4" aria-hidden="true">✓</span>
+      </button></li>
+      <li><button class="nav-btn" onclick="goTo(5)" id="nav-5">
+        <span class="nav-icon" aria-hidden="true">🎯</span>
+        <span class="nav-label">Summary</span>
+        <span class="nav-check" id="check-5" aria-hidden="true">✓</span>
+      </button></li>
+    </ul>
+  </nav>
+  <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" onclick="closeSidebar(true)" aria-hidden="true" tabindex="-1"></button>
+
+  <!-- Main Content -->
+  <main class="content" id="content" tabindex="-1">
+
+    <!-- Screen 0: Welcome -->
+    <section class="screen active" id="screen-0" data-index="0" tabindex="-1" aria-label="Welcome">
+      
+      <div class="screen-landing">
+        
+        <h1>Course Orientation</h1>
+        <h2>Course Orientation: Welcome &amp; Overview (Optional)</h2>
+        
+        <p class="start-hint">Click Next → to begin course orientation.</p>
+      </div>
+    </section>
+
+    <!-- Screen 1: Course Overview & Roadmap -->
+    <section class="screen" id="screen-1" data-index="1" tabindex="-1" aria-label="Course Overview &amp; Roadmap">
+      <div class="screen-lesson"><h2>Course Overview &amp; Roadmap</h2><div class="lesson-content"><h2>Course Vision &amp; Structure</h2>
+<p>Comprehensive orientation to AI Fundamentals for Knowledge Workers. Covers the complete curriculum roadmap, target audience background, prerequisite verification, hands-on environment and tooling readiness checklist, and recommended learning strategies. Facilitator Note: Instructors may utilize this 30-minute orientation window to administer the diagnostic Pre-Assessment test provided in the Trainer Preparation Guide to benchmark baseline learner proficiency before starting Module 1.</p>
+<div class="objectives-box">
+
+<h3>🎯 Course Learning Objectives</h3>
+<p><em>This course will cover the following objectives:</em></p>
+<ul>
+<li>Identify core generative AI concepts, capabilities, limitations, and workplace compliance rules concerning data privacy and intellectual property.</li>
+<li>Construct structured, role-based prompts using proven prompting frameworks across major conversational AI platforms.</li>
+<li>Generate, summarize, and refine professional business documents and communications while applying effective human-in-the-loop review.</li>
+<li>Apply AI-assisted prompts to spreadsheet tasks including formula creation, data cleaning, and tabular summary generation.</li>
+<li>Direct browser-based autonomous AI agents through multi-step administrative workflows while mitigating hallucinations and quality risks.</li>
+</ul>
+</div>
+
+<h3>Curriculum Roadmap</h3>
+<p>This course spans <strong>1 day</strong> and is organized into <strong>5 modules</strong> designed to take you from core foundations to practical mastery:</p>
+<ul>
+<li><p><strong>Module 0: Course Orientation: Welcome &amp; Overview (Optional)</strong> — Comprehensive orientation to AI Fundamentals for Knowledge Workers. Covers the complete curriculum roadmap, target audience background, prerequisite verification, hands-on environment and tooling readiness checklist, and recommended learning strategies. Facilitator Note: Instructors may utilize this 30-minute orientation window to administer the diagnostic Pre-Assessment test provided in the Trainer Preparation Guide to benchmark baseline learner proficiency before starting Module 1.</p>
+</li>
+<li><p><strong>Module 1: AI Foundations, Responsible Use, and Workplace Governance</strong> — Understand core generative AI concepts, terminology, and organizational policies for data privacy and intellectual property protection.</p>
+</li>
+<li><p><strong>Module 2: Prompt Engineering and Business Content Generation</strong> — Master structured prompting frameworks to generate clear, targeted business content across multiple conversational platforms.</p>
+</li>
+<li><p><strong>Module 3: Streamlining Document Drafting and Spreadsheet Analysis</strong> — Accelerate office productivity by drafting business correspondence, synthesizing reports, and executing spreadsheet tasks with AI assistance.</p>
+</li>
+<li><p><strong>Module 4: Supervising Task-Oriented AI Agents and Everyday Workflows</strong> — Manage multi-step browser-based AI workflows and autonomous agent interactions while maintaining active human oversight.</p>
+</li>
+</ul>
+<p>Each module builds upon prior concepts, pairing instructional theory with applied practice to maximize retention and job readiness.</p>
+</div>
+      <div class="key-points">
+        <h4>💡 Key Takeaways</h4>
+        <ul>
+          <li>Comprehensive curriculum spanning 1 day and 5 core modules.</li>
+          <li>Structured progressive learning path from fundamentals to practical mastery.</li>
+          <li>Balanced delivery combining instructional concepts with hands-on practice.</li>
+        </ul>
+      </div></div>
+    </section>
+
+    <!-- Screen 2: Target Audience & Prerequisites -->
+    <section class="screen" id="screen-2" data-index="2" tabindex="-1" aria-label="Target Audience &amp; Prerequisites">
+      <div class="screen-lesson"><h2>Target Audience &amp; Prerequisites</h2><div class="lesson-content"><h2>Intended Audience</h2>
+<p>Business professionals, administrative assistants, operations personnel, and project coordinators seeking to integrate generative AI safely into daily office tasks.</p>
+<p><strong>Course Level:</strong> BEGINNER</p>
+<h3>Prerequisites &amp; Assumed Background</h3>
+<p>Basic familiarity with standard web browsers and office applications such as word processors and spreadsheets, with no prior AI or technical experience required.</p>
+<p>No unlisted specialized equipment or proprietary backgrounds are required. If you meet the baseline prerequisites, you will have all the foundational context necessary to succeed.</p>
+</div>
+      <div class="key-points">
+        <h4>💡 Key Takeaways</h4>
+        <ul>
+          <li>Designed specifically for Business professionals, administrative assistants, operations personnel, and project coordinators se...</li>
+          <li>Course audience level: beginner.</li>
+          <li>Clear baseline prerequisites ensure all learners can follow along comfortably.</li>
+        </ul>
+      </div></div>
+    </section>
+
+    <!-- Screen 3: Environment & Tooling Readiness -->
+    <section class="screen" id="screen-3" data-index="3" tabindex="-1" aria-label="Environment &amp; Tooling Readiness">
+      <div class="screen-lesson"><h2>Environment &amp; Tooling Readiness</h2><div class="lesson-content"><h2>Hands-on Environment &amp; Tooling</h2>
+<p>Practical application is central to this curriculum. To get the full value of the exercises and lab assignments, verify your tools and environment before starting Module 1.</p>
+<h3>Readiness Checklist</h3>
+<ul>
+<li><strong>Environment Access:</strong> Ensure you have access to the required operating systems, shells, or cloud consoles specified in the course syllabus.</li>
+<li><strong>Tools &amp; Utilities:</strong> Confirm that terminal emulators, text editors, and necessary runtime packages are installed and functional.</li>
+<li><strong>Permissions &amp; Credentials:</strong> Verify that you have appropriate administrative privileges or sandbox access for lab tasks.</li>
+<li><strong>Documentation Access:</strong> Bookmark relevant official documentation and reference guides provided in this course.</li>
+</ul>
+</div>
+      <div class="key-points">
+        <h4>💡 Key Takeaways</h4>
+        <ul>
+          <li>Verify terminal, software, and account credentials prior to Module 1.</li>
+          <li>Review the readiness checklist to ensure an unblocked lab experience.</li>
+          <li>Access sandbox environments and documentation links before starting practical work.</li>
+        </ul>
+      </div></div>
+    </section>
+
+    <!-- Screen 4: Learning Strategies & How to Succeed -->
+    <section class="screen" id="screen-4" data-index="4" tabindex="-1" aria-label="Learning Strategies &amp; How to Succeed">
+      <div class="screen-lesson"><h2>Learning Strategies &amp; How to Succeed</h2><div class="lesson-content"><h2>Learning Strategies &amp; Navigation</h2>
+<p>To maximize your learning outcomes and skill development:</p>
+<h3>Best Practices</h3>
+<ul>
+<li><strong>Active Participation:</strong> Work through every concept and examine the diagrams and architectural models closely.</li>
+<li><strong>Hands-on Labs:</strong> Complete each guided lab procedure step-by-step, verifying commands and observing outputs.</li>
+<li><strong>Self-Assessment:</strong> Leverage knowledge checks and review questions at the end of each module to gauge comprehension.</li>
+<li><strong>Reference Materials:</strong> Utilize the Quick Reference Guide and downloadable resources throughout your study.</li>
+</ul>
+</div>
+      <div class="key-points">
+        <h4>💡 Key Takeaways</h4>
+        <ul>
+          <li>Engage actively with structured lessons, diagrams, and code snippets.</li>
+          <li>Execute and verify lab procedures step-by-step.</li>
+          <li>Use knowledge checks and reference guides to solidify retention.</li>
+        </ul>
+      </div></div>
+    </section>
+
+    <!-- Screen 5: Summary -->
+    <section class="screen" id="screen-5" data-index="5" tabindex="-1" aria-label="Summary">
+      
+      <div class="screen-summary">
+        <h2>🎯 Orientation Complete</h2>
+        <div class="summary-content"><h2>Ready to Begin</h2>
+<p>You have completed the course orientation and reviewed the curriculum roadmap, prerequisites, and environment setup guidelines.</p>
+<p><strong>Next Step:</strong> Proceed to <strong>Module 1</strong> to begin your training journey!</p>
+</div>
+        
+        <div class="completion-box">
+          <div class="completion-icon">🎉</div>
+          <h3>Orientation Complete</h3>
+          <p>You have reviewed the course orientation and are ready to begin Module 1.</p>
+          
+          <div class="module-nav-cta" style="margin-top:1.25rem">
+            <div style="display:flex;gap:0.75rem;justify-content:center;align-items:center;flex-wrap:wrap">
+              
+                <a href="module_01.html" onclick="if(window.__navigateToNextModule){event.preventDefault();window.__navigateToNextModule();}" class="btn btn-primary" style="text-decoration:none;display:inline-block;padding:0.65rem 1.4rem;font-weight:700;font-size:0.95rem">Proceed to Module 1 →</a>
+                <a href="index.html" class="btn btn-secondary directory-link" style="text-decoration:none;display:none;padding:0.65rem 1.25rem;font-weight:700;font-size:0.95rem">Course Directory</a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+      <button class="btn btn-secondary" id="prevBtn" onclick="prev()">← Previous</button>
+      <span class="screen-counter" id="screenCounter">1 / 6</span>
+      <button class="btn btn-primary" id="nextBtn" onclick="next()">Next →</button>
+    </div>
+  </main>
+
+</div>
+
+<!-- ====== FOOTER ====== -->
+<footer class="course-footer">
+  <span></span>
+  
+</footer>
+
+
+<script>
+(function() {
+  const TOTAL = 6;
+  const MODULE_NUM = 0;
+  const TOTAL_MODULES = 4;
+  const isEmbedded = window.parent && window.parent !== window;
+  let current = 0;
+  const visited = new Set([0]);
+  const mobileQuery = window.matchMedia('(max-width: 768px)');
+
+  const NEXT_FILE = 'module_' + String(MODULE_NUM + 1).padStart(2, '0') + '.html';
+  const NEXT_FALLBACK = 'Module-' + String(MODULE_NUM + 1).padStart(2, '0') + '.html';
+  const IS_FINAL = MODULE_NUM >= TOTAL_MODULES && MODULE_NUM > 0;
+
+  window.__navigateToNextModule = function() {
+    if (IS_FINAL) {
+      if (!isEmbedded) {
+        window.location.href = 'index.html';
+      }
+      return;
+    }
+    if (isEmbedded) {
+      try {
+        if (window.parent && typeof window.parent.__coursewareLoadNextModule === 'function') {
+          window.parent.__coursewareLoadNextModule();
+          return;
+        }
+        window.parent.postMessage({
+          type: 'courseware-self-paced-next-module',
+          moduleNumber: MODULE_NUM,
+          currentModule: MODULE_NUM,
+          nextModule: MODULE_NUM + 1,
+          nextFile: NEXT_FILE,
+          nextFallback: NEXT_FALLBACK
+        }, '*');
+        window.parent.postMessage({
+          type: 'courseware-next-module',
+          moduleNumber: MODULE_NUM,
+          currentModule: MODULE_NUM,
+          nextModule: MODULE_NUM + 1,
+          nextFile: NEXT_FILE,
+          nextFallback: NEXT_FALLBACK
+        }, '*');
+      } catch(e) {}
+    }
+    window.location.href = NEXT_FILE;
+  };
+
+  // Context-aware standalone visibility
+  if (!isEmbedded) {
+    const homeLink = document.getElementById('courseHomeLink');
+    if (homeLink) homeLink.style.display = 'inline-flex';
+    const dirLinks = document.querySelectorAll('.directory-link');
+    dirLinks.forEach(function(el) { el.style.display = 'inline-block'; });
+  } else {
+    const lmsComplete = document.querySelector('.lms-course-complete');
+    if (lmsComplete) lmsComplete.style.display = 'block';
+  }
+
+  function markModuleVisited() {
+    try {
+      if (visited.size >= TOTAL || current === TOTAL - 1) {
+        localStorage.setItem('courseware_completed_module_' + MODULE_NUM, 'true');
+      }
+    } catch(e) {}
+  }
+  markModuleVisited();
+
+  function focusCurrentScreen() {
+    const screen = document.getElementById('screen-' + current);
+    if (!screen) return;
+    const heading = screen.querySelector('h1, h2, h3');
+    const target = heading || screen;
+    target.setAttribute('tabindex', '-1');
+    target.focus({ preventScroll: true });
+  }
+
+  function setSidebarOpen(open, returnFocus) {
+    const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    const menuButton = document.getElementById('mobileMenuBtn');
+    if (!sidebar || !backdrop || !menuButton) return;
+    sidebar.classList.toggle('open', open);
+    backdrop.classList.toggle('open', open);
+    menuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuButton.setAttribute('aria-label', open ? "Close module navigation" : "Open module navigation");
+    if (open) {
+      window.requestAnimationFrame(function() {
+        const firstNav = sidebar.querySelector('.nav-btn');
+        if (firstNav) firstNav.focus();
+      });
+    } else if (returnFocus) {
+      menuButton.focus();
+    }
+  }
+
+  function update(shouldFocus) {
+    // Screens
+    document.querySelectorAll('.screen').forEach((el, i) => {
+      el.classList.toggle('active', i === current);
+    });
+
+    // Nav
+    document.querySelectorAll('.nav-btn').forEach((btn, i) => {
+      btn.classList.toggle('active', i === current);
+      btn.classList.toggle('visited', visited.has(i) && i !== current);
+      if (i === current) btn.setAttribute('aria-current', 'page');
+      else btn.removeAttribute('aria-current');
+    });
+    document.querySelectorAll('.nav-check').forEach((el, i) => {
+      el.style.display = visited.has(i) && i !== current ? 'inline' : 'none';
+    });
+
+    // Buttons
+    document.getElementById('prevBtn').disabled = current === 0;
+    document.getElementById('nextBtn').textContent = current === TOTAL - 1 ? "Finish ✓" : "Next →";
+    document.getElementById('screenCounter').textContent = (current + 1) + ' / ' + TOTAL;
+
+    // Progress
+    const pct = Math.round((visited.size / TOTAL) * 100);
+    document.getElementById('progressPercent').textContent = pct;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressBar').setAttribute('aria-valuenow', String(pct));
+
+    // Scroll to top of content
+    document.getElementById('content').scrollTop = 0;
+    window.scrollTo(0, 0);
+    if (shouldFocus) window.requestAnimationFrame(focusCurrentScreen);
+  }
+
+  window.goTo = function(i) {
+    if (i >= 0 && i < TOTAL) {
+      current = i;
+      visited.add(i);
+      if (mobileQuery.matches) setSidebarOpen(false, false);
+      update(true);
+    }
+  };
+  window.next = function() {
+    if (current < TOTAL - 1) {
+      current++;
+      visited.add(current);
+      markModuleVisited();
+      update(true);
+    } else if (current === TOTAL - 1) {
+      markModuleVisited();
+      if (!IS_FINAL) {
+        window.__navigateToNextModule();
+      } else if (!isEmbedded) {
+        window.location.href = 'index.html';
+      }
+    }
+  };
+  window.prev = function() {
+    if (current > 0) { current--; update(true); }
+  };
+  window.toggleSidebar = function() {
+    const sidebar = document.getElementById('sidebar');
+    setSidebarOpen(!sidebar.classList.contains('open'), false);
+  };
+  window.closeSidebar = function(returnFocus) {
+    setSidebarOpen(false, !!returnFocus);
+  };
+
+  document.addEventListener('keydown', function(event) {
+    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement && document.activeElement.tagName)) return;
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar && sidebar.classList.contains('open')) {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setSidebarOpen(false, true);
+        return;
+      }
+      if (event.key === 'Tab') {
+        const focusable = Array.from(sidebar.querySelectorAll('button:not([disabled])'));
+        if (focusable.length === 0) {
+          event.preventDefault();
+          return;
+        }
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        } else if (!sidebar.contains(document.activeElement)) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+      return;
+    }
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      window.next();
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      window.prev();
+    }
+  });
+  const handleViewportChange = function(event) {
+    if (!event.matches) setSidebarOpen(false, false);
+  };
+  if (typeof mobileQuery.addEventListener === 'function') mobileQuery.addEventListener('change', handleViewportChange);
+  else if (typeof mobileQuery.addListener === 'function') mobileQuery.addListener(handleViewportChange);
+  const skipLink = document.querySelector('.skip-link');
+  if (skipLink) {
+    skipLink.addEventListener('click', function() {
+      window.setTimeout(function() { document.getElementById('content').focus(); }, 0);
+    });
+  }
+
+  // Quiz grading
+  window.gradeQuiz = function() {
+    const answers = window.__quizAnswers || [];
+    const explanations = window.__quizExplanations || [];
+    let correct = 0;
+
+    answers.forEach((ans, i) => {
+      const selected = document.querySelector('input[name="q' + i + '"]:checked');
+      const fb = document.getElementById('fb-' + i);
+      const questionDiv = document.getElementById('qq-' + i);
+      const labels = questionDiv.querySelectorAll('.option-label');
+
+      labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+      if (selected) {
+        const userAns = selected.value;
+        const isCorrect = userAns === ans;
+        if (isCorrect) {
+          correct++;
+          selected.closest('.option-label').classList.add('correct');
+          fb.className = 'feedback show correct';
+          fb.textContent = '✓ ' + "Correct!" + (explanations[i] ? ' ' + explanations[i] : '');
+        } else {
+          selected.closest('.option-label').classList.add('incorrect');
+          // Highlight correct answer
+          labels.forEach(l => {
+            const inp = l.querySelector('input');
+            if (inp && inp.value === ans) l.classList.add('correct');
+          });
+          fb.className = 'feedback show incorrect';
+          fb.textContent = '✗ ' + "Incorrect." + ' ' + "The correct answer is" + ' ' + ans + '.' + (explanations[i] ? ' ' + explanations[i] : '');
+        }
+      } else {
+        fb.className = 'feedback show incorrect';
+        fb.textContent = "Incorrect." + ' ' + "The correct answer is" + ' ' + ans + '.';
+      }
+    });
+
+    const pct = Math.round((correct / answers.length) * 100);
+    const results = document.getElementById('quizResults');
+    results.className = 'quiz-results show ' + (pct >= 80 ? 'pass' : 'fail');
+    results.textContent = "Score" + ': ' + correct + '/' + answers.length + ' (' + pct + '%)' +
+      (pct >= 80 ? ' — ' + "Great job — you passed the knowledge check." + ' ✓' : ' — ' + "Review the material and try again.");
+    results.focus();
+  };
+
+  window.resetQuiz = function() {
+    document.querySelectorAll('#quizForm input[type="radio"]').forEach(el => { el.checked = false; });
+    document.querySelectorAll('.feedback').forEach(el => { el.className = 'feedback'; el.textContent = ''; });
+    document.querySelectorAll('.option-label').forEach(el => { el.classList.remove('correct', 'incorrect'); });
+    const results = document.getElementById('quizResults');
+    results.className = 'quiz-results';
+    results.textContent = '';
+  };
+
+  // Initial state
+  update(false);
+})();
+</script>
+
+</body>
+</html>
