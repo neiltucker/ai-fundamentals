@@ -314,3 +314,65 @@ body {
   .card { padding: 1.25rem; }
   .module-card { padding: 1rem; }
 }
+
+/* Timing Matrix & Badges */
+.timing-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.timing-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.timing-table th, .timing-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.timing-table th {
+  background: #f1f5f9;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.timing-table tr:last-child td {
+  border-bottom: none;
+}
+
+.timing-table tr.total-row {
+  background: #eff6ff;
+  font-weight: 700;
+  color: #1e40af;
+}
+
+.time-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+.time-pill.lab {
+  background: #ecfdf5;
+  color: #065f46;
+  border-color: #a7f3d0;
+}
+
+.time-pill.total {
+  background: #eff6ff;
+  color: #1e40af;
+  border-color: #bfdbfe;
+  font-weight: 700;
+}
