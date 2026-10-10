@@ -24,4 +24,4 @@
  *     Setting the value to 0 fully disables the Tutor while
  *     leaving every file in place.
  * ============================================================ */
-window.__CS_AI_TUTOR_ENABLED__ = 1;
+window.__CS_AI_TUTOR_ENABLED__ = 0;
